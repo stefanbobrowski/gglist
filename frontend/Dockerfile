@@ -9,4 +9,5 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8080
-CMD ["npx", "run", "preview", "--", "--port", "8080", "--host"]
+
+CMD [ "npx", "vite", "preview", "--port", "8080", "--host", "0.0.0.0" ]
