@@ -3,6 +3,12 @@ import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    port: 5173, // Optional: explicitly define Vite dev port
+    proxy: {
+      "/api": "http://localhost:8080", // 👈 Point to your backend
+    },
+  },
   preview: {
     host: "0.0.0.0",
     port: 8080,

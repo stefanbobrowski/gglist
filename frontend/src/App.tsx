@@ -1,33 +1,54 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useAuth } from "./context/AuthContext";
+import PokeDex from "./components/PokeDex/PokeDex";
 import "./App.css";
+import { GoogleLogin } from "@react-oauth/google";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { user, setUser, logout } = useAuth();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>ggList</h1>
+        {user ? (
+          <>
+            <img
+              src={user.picture}
+              alt={user.name}
+              style={{ height: 32, borderRadius: "50%", marginLeft: 8 }}
+            />
+            <span style={{ margin: "0 8px" }}>{user.name}</span>
+            <button onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              fetch("/api/google-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  credential: credentialResponse.credential,
+                }),
+              })
+                .then((res) => res.json())
+                .then(({ token, user }) => {
+                  localStorage.setItem("token", token);
+                  setUser(user); // 🔥 Actually update the context here
+                })
+                .catch((err) => {
+                  console.error("Login error:", err);
+                });
+            }}
+            onError={() => {
+              console.error("Login Failed");
+            }}
+          />
+        )}
+      </header>
+
+      <h1>Top 10 Pokemon (Original 150)</h1>
+      <p>(Login to select favorites)</p>
+      <PokeDex />
     </>
   );
 }

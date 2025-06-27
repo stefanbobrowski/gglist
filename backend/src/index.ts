@@ -1,10 +1,18 @@
 import express, { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
 import cors from "cors";
+import pokemonRoute from "./routes/pokemon";
+import authRoutes from "./routes/auth";
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+app.use("/api", authRoutes);
+app.use("/api/pokemon", pokemonRoute);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("GGList API running");
