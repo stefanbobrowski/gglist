@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./PokeDex.css";
 import { useAuth } from "../../context/AuthContext";
+import { API_BASE } from "../../constants";
 
 type Pokemon = {
   id: string;
@@ -14,7 +15,7 @@ const PokeDex: React.FC = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  // const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
   console.log("API_BASE:", API_BASE);
 
