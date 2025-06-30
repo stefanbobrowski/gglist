@@ -25,6 +25,11 @@ export function Header() {
       ) : (
         <GoogleLogin
           onSuccess={(credentialResponse) => {
+            // ✅ Log the credential to verify it's coming through
+            console.log(
+              "🪪 Google credential token:",
+              credentialResponse.credential
+            );
             fetch(`${API_BASE}/api/google-login`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -32,13 +37,19 @@ export function Header() {
                 credential: credentialResponse.credential,
               }),
             })
-              .then((res) => res.json())
+              .then(async (res) => {
+                if (!res.ok) {
+                  const text = await res.text();
+                  throw new Error(`Login failed: ${text}`);
+                }
+                return res.json();
+              })
               .then(({ token, user }) => {
                 localStorage.setItem("token", token);
                 setUser(user);
               })
               .catch((err) => {
-                console.error("Login error:", err);
+                console.error("❌ Login error:", err);
               });
           }}
           onError={() => {
