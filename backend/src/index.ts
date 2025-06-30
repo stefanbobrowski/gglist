@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import helmet from "helmet";
 import pokemonRoute from "./routes/pokemon";
 import authRoutes from "./routes/auth";
 import favoriteRoutes from "./routes/favorites";
@@ -11,6 +12,7 @@ import { errorHandler } from "./middleware/errorHandler";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
 app.use(
   cors({
     origin: [
