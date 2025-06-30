@@ -5,11 +5,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY .env.production .env.production
-
 COPY . .
 
-# Make sure Vite uses production mode
+# Tell Vite to use production mode (loads `.env.production`)
 RUN npm run build -- --mode production
 
 EXPOSE 8080
