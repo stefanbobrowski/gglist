@@ -5,6 +5,8 @@ import { jwtDecode } from "jwt-decode";
 type User = {
   id: string;
   email: string;
+  name?: string;
+  picture?: string;
   iat?: number;
   exp?: number;
   token?: string;
