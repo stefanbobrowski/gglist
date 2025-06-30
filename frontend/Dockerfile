@@ -8,8 +8,6 @@ RUN npm install
 
 COPY . .
 
-COPY shared ./shared
-
 RUN npm run build
 
 EXPOSE 8080
