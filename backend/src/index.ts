@@ -13,7 +13,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "http://localhost:5173", // or "*" for temporary dev testing
+    origin: [
+      "http://localhost:5173",
+      "https://gglist-frontend-177352903615.us-central1.run.app",
+    ],
     credentials: true,
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
