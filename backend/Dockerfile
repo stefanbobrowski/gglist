@@ -11,6 +11,8 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
+COPY shared ./shared
+
 # Build TypeScript
 RUN npm run build
 
