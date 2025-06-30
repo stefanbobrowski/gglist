@@ -3,16 +3,27 @@ import dotenv from "dotenv";
 import cors from "cors";
 import pokemonRoute from "./routes/pokemon";
 import authRoutes from "./routes/auth";
+import favoriteRoutes from "./routes/favorites";
+import top from "./routes/top";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // or "*" for temporary dev testing
+    credentials: true,
+    methods: ["GET", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use("/api", authRoutes);
 app.use("/api/pokemon", pokemonRoute);
+app.use("/api/favorites", favoriteRoutes);
+app.use("/api/top", top);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("GGList API running");

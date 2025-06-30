@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (token) {
       try {
         const decoded: User = jwtDecode(token);
-        setUser(decoded);
+        setUser({ ...decoded, token }); // ✅ attach token here
       } catch {
         localStorage.removeItem("token");
       }

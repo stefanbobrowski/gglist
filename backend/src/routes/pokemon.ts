@@ -1,69 +1,35 @@
-import express from "express";
-import { POKEMON_API_KEY } from "../config/env";
+import express, { Request, Response, Router } from "express";
+import { getCachedPokemon, setCachedPokemon } from "../utils/cache";
+import { pool } from "../utils/db";
 
-const router = express.Router();
+const router: Router = express.Router();
 
-router.get("/", async (_req, res) => {
+router.get("/debug", (_req, res) => {
+  res.send("pokemon route working!");
+});
+
+router.get("/", async (_req: Request, res: Response): Promise<void> => {
+  const cached = getCachedPokemon();
+  if (cached) {
+    console.log("Returning cached Pokémon data from memory");
+    res.json(cached);
+    return;
+  }
+
   try {
-    let allCards: any[] = [];
-    let page = 1;
-    let hasMore = true;
-
-    // Fetch all pages of cards
-    while (hasMore) {
-      const response = await fetch(
-        `https://api.pokemontcg.io/v2/cards?q=(set.id:base1 OR set.id:base2 OR set.id:base3)&pageSize=250&page=${page}`,
-        {
-          headers: {
-            "X-Api-Key": POKEMON_API_KEY!,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Pokémon API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      allCards.push(...data.data);
-      hasMore = data.data.length === 250;
-      page++;
-    }
-
-    // Step 1: Only Gen 1 Pokémon (with valid pokedex numbers)
-    const gen1Cards = allCards.filter(
-      (card) =>
-        Array.isArray(card.nationalPokedexNumbers) &&
-        card.nationalPokedexNumbers[0] <= 151
+    const result = await pool.query(
+      "SELECT id, pokedex, name, image, number FROM pokemon_cards ORDER BY pokedex ASC"
     );
 
-    // Step 2: Deduplicate by Pokédex number
-    const seen = new Set<number>();
-    const unique = gen1Cards.filter((card) => {
-      const dex = card.nationalPokedexNumbers[0];
-      if (seen.has(dex)) return false;
-      seen.add(dex);
-      return true;
-    });
+    const cards = result.rows;
 
-    // Step 3: Sort by Pokédex number
-    const sorted = unique.sort(
-      (a, b) => a.nationalPokedexNumbers[0] - b.nationalPokedexNumbers[0]
-    );
+    setCachedPokemon(cards);
+    console.log("Returning Pokémon data from Cloud SQL");
 
-    // Step 4: Trim to clean output
-    const result = sorted.map((card) => ({
-      id: card.id,
-      pokedex: card.nationalPokedexNumbers[0],
-      name: card.name,
-      image: card.images?.large,
-      number: card.number,
-    }));
-
-    res.json(result);
+    res.json(cards);
   } catch (err) {
-    console.error("Error fetching Pokémon cards:", err);
-    res.status(500).json({ error: "Failed to fetch cards" });
+    console.error("❌ Error fetching Pokémon cards from DB:", err);
+    res.status(500).json({ error: "Failed to fetch cards from database" });
   }
 });
 
