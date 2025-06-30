@@ -11,6 +11,7 @@ import {
   ArcElement,
 } from "chart.js";
 import type { ChartOptions } from "chart.js";
+import { API_BASE } from "../../constants";
 
 ChartJS.register(
   BarElement,
@@ -24,7 +25,6 @@ ChartJS.register(
 export const TopFavorites = () => {
   const [topFavorites, setTopFavorites] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
   const typeColors: Record<string, string> = {
     Fire: "#F08030",

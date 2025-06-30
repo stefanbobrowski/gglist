@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
+import { API_BASE } from "../constants";
 
 export type Pokemon = {
   id: string;
@@ -13,7 +14,6 @@ export function usePokemonFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
   const pokemonMap = useMemo(() => {
     return pokemon.reduce(

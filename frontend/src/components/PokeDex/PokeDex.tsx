@@ -15,7 +15,6 @@ const PokeDex: React.FC = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  // const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
   console.log("API_BASE:", API_BASE);
 
