@@ -1,7 +1,14 @@
 // src/context/AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import type { User } from "../../../shared/types/types";
+
+type User = {
+  id: string;
+  email: string;
+  iat?: number;
+  exp?: number;
+  token?: string;
+};
 
 interface AuthContextType {
   user: User | null;
