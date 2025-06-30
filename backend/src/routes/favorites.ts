@@ -1,19 +1,15 @@
 import express, { Request, RequestHandler } from "express";
 import { authenticate } from "../middleware/authenticate";
 import { pool } from "../utils/db";
+import { favoritesRateLimiter } from "../middleware/rateLimit";
 
 const router = express.Router();
 
-type AuthRequest = Request & {
-  user: {
-    id: string;
-    email: string;
-  };
-};
+router.use(favoritesRateLimiter);
 
 // GET /api/favorites
 router.get("/", authenticate, async (req, res) => {
-  const userId = (req as AuthRequest).user.id;
+  const { id: userId } = req.user!;
 
   try {
     const result = await pool.query(
@@ -28,7 +24,7 @@ router.get("/", authenticate, async (req, res) => {
 
 // POST /api/favorites
 router.post("/", authenticate, (async (req, res) => {
-  const userId = (req as AuthRequest).user.id;
+  const { id: userId } = req.user!;
   const { cardId } = req.body;
 
   if (!cardId) {
@@ -68,7 +64,7 @@ router.post("/", authenticate, (async (req, res) => {
 
 // DELETE /api/favorites?cardId=base1-4
 router.delete("/", authenticate, (async (req, res) => {
-  const userId = (req as AuthRequest).user.id;
+  const { id: userId } = req.user!;
   const cardId = req.query.cardId as string;
 
   if (!cardId) {

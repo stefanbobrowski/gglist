@@ -1,9 +1,10 @@
 import express from "express";
 import { pool } from "../utils/db";
+import { topRateLimiter } from "../middleware/rateLimit";
 
 const router = express.Router();
 
-router.get("/", async (_req, res) => {
+router.get("/", topRateLimiter, async (_req, res) => {
   try {
     const result = await pool.query(`
       SELECT 

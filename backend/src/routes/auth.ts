@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
+import { loginRateLimiter } from "../middleware/rateLimit";
 
 const router = express.Router();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -19,6 +20,7 @@ router.get("/debug", (_req, res) => {
 // POST /api/google-login
 router.post(
   "/google-login",
+  loginRateLimiter,
   async (req: Request, res: Response): Promise<void> => {
     const { credential } = req.body;
     if (!credential) {

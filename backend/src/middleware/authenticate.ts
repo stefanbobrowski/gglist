@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import { ensureUserExists } from "../utils/ensureUserExists";
 
 interface AuthPayload {
+  id: string;
   email: string;
-  sub: string;
 }
 
 export const authenticate = async (
