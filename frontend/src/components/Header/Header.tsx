@@ -1,6 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
+import { API_BASE } from "../../constants";
 
 export function Header() {
   const { user, setUser, logout } = useAuth();
@@ -24,7 +25,7 @@ export function Header() {
       ) : (
         <GoogleLogin
           onSuccess={(credentialResponse) => {
-            fetch("/api/google-login", {
+            fetch(`${API_BASE}/api/google-login`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -34,7 +35,7 @@ export function Header() {
               .then((res) => res.json())
               .then(({ token, user }) => {
                 localStorage.setItem("token", token);
-                setUser(user); // 🔥 Actually update the context here
+                setUser(user);
               })
               .catch((err) => {
                 console.error("Login error:", err);

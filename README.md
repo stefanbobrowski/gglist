@@ -53,14 +53,6 @@ This isn’t just a Pokémon demo — the whole setup is meant to be repurposed:
 
 ---
 
-## Examples
-
-- Track your top 10 favorite video game weapons
-- Favorite movies per user with a shared leaderboard
-- Top open-source tools, books, or even AI models
-
----
-
 ## Local Dev
 
 ```bash
@@ -71,8 +63,9 @@ cd frontend && npm install && npm run dev
 cd backend && npm install && npm run dev
 ```
 
-Repo Structure (simplified)
+## Repo Structure (simplified)
 
+```
 gglist/
 ├── backend/
 │ ├── src/routes/
@@ -83,11 +76,15 @@ gglist/
 │ ├── src/
 │ └── Dockerfile
 └── .github/workflows/
+```
 
-Repo
+## Repo
+
 🔗 github.com/stefanbobrowski/gglist
 
-Author
-Stefan Bobrowski
+## Author
+
+### Stefan Bobrowski
+
 🌐 stefanbobrowski.com
 📦 github.com/stefanbobrowski
