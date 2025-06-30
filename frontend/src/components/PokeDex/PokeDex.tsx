@@ -16,6 +16,8 @@ const PokeDex: React.FC = () => {
   const { user } = useAuth();
   const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
+  console.log("API_BASE:", API_BASE);
+
   const [fullscreenCard, setFullscreenCard] = useState<Pokemon | null>(null);
 
   const openFullScreen = (card: Pokemon) => {
