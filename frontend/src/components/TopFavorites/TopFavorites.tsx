@@ -93,7 +93,6 @@ export const TopFavorites = () => {
         const sorted = [...data].sort(
           (a, b) => parseInt(b.favorite_count) - parseInt(a.favorite_count)
         );
-        console.log("TOP FAVOS SORTED", sorted);
         setTopFavorites(sorted);
       } catch (err) {
         console.error("Failed to fetch top favorites:", err);

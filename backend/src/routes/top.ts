@@ -23,7 +23,6 @@ router.get("/", topRateLimiter, async (_req, res) => {
         favorite_count DESC
       LIMIT 10
     `);
-    console.log("top favs result:", result.rows);
     res.json(result.rows);
   } catch (err) {
     console.error("❌ Failed to get top favorites:", err);

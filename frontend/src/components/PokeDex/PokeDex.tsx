@@ -16,8 +16,6 @@ const PokeDex: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
-  console.log("API_BASE:", API_BASE);
-
   const [fullscreenCard, setFullscreenCard] = useState<Pokemon | null>(null);
 
   const openFullScreen = (card: Pokemon) => {

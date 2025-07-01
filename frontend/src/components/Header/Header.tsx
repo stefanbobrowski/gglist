@@ -25,11 +25,6 @@ export function Header() {
       ) : (
         <GoogleLogin
           onSuccess={(credentialResponse) => {
-            // ✅ Log the credential to verify it's coming through
-            console.log(
-              "🪪 Google credential token:",
-              credentialResponse.credential
-            );
             fetch(`${API_BASE}/api/google-login`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
