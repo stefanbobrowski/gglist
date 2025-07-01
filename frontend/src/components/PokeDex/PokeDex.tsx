@@ -162,6 +162,7 @@ const PokeDex: React.FC = () => {
                       alt={p.name}
                       title={p.name}
                       className="favorite-thumb"
+                      loading="lazy"
                     />
                     <div className="card-toolbar">
                       <button
