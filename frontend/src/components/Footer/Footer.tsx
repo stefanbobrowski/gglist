@@ -4,7 +4,7 @@ export const Footer = () => {
       <p>
         Made with ❤️ by{" "}
         <a
-          href="" // Replace with your GitHub or personal link
+          href="https://github.com/stefanbobrowski/gglist" // Replace with your GitHub or personal link
           target="_blank"
           rel="noopener noreferrer"
           className="footer-link"
