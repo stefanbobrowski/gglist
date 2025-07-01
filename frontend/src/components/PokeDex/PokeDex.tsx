@@ -149,11 +149,11 @@ const PokeDex: React.FC = () => {
           <p style={{ color: "green" }}>
             {favorites.length}/10 favorites selected
           </p>
-          <div className="favorites">
-            {favorites.length === 0 ? (
-              <span style={{ color: "red" }}>No favorites selected</span>
-            ) : (
-              favorites.map((id) => {
+          {favorites.length === 0 ? (
+            <span style={{ color: "red" }}>No favorites selected</span>
+          ) : (
+            <div className="favorites">
+              {favorites.map((id) => {
                 const p = pokemonMap[id];
                 return p ? (
                   <div key={id} className="favorite-preview">
@@ -180,9 +180,9 @@ const PokeDex: React.FC = () => {
                     </div>
                   </div>
                 ) : null;
-              })
-            )}
-          </div>
+              })}
+            </div>
+          )}
         </>
       )}
       <h2>Card Collection</h2>
@@ -215,7 +215,7 @@ const PokeDex: React.FC = () => {
                     : "Favorite this card"
               }
             >
-              {favorites.includes(card.id) ? "❤️" : "💟"}
+              {favorites.includes(card.id) ? "❤️" : "🤍"}
             </button>
           </div>
         ))}

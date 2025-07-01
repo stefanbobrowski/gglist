@@ -28,17 +28,24 @@ header {
 }
 
 header h1 {
-  text-shadow: 7px 7px 7px black;
 }
 
 .header-title {
   margin: 2rem auto 1rem auto;
-  text-shadow: 7px 7px 7px black;
   font-size: clamp(1.5rem, 2vw, 2.5rem);
+}
+
+h1,
+h2 {
+  text-shadow: 7px 7px 7px black;
 }
 
 .user-info {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.top-graphs-container {
+  display: flex;
 }

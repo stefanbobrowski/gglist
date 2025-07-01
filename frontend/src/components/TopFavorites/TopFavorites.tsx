@@ -25,15 +25,26 @@ ChartJS.register(
 export const TopFavorites = () => {
   const [topFavorites, setTopFavorites] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fullscreenCard, setFullscreenCard] = useState<any | null>(null);
+
+  const openFullScreen = (card: any) => {
+    setFullscreenCard(card);
+    document.body.style.overflow = "hidden"; // prevent scroll behind overlay
+  };
+
+  const closeFullScreen = () => {
+    setFullscreenCard(null);
+    document.body.style.overflow = ""; // restore scroll
+  };
 
   const typeColors: Record<string, string> = {
-    Fire: "#F08030",
-    Water: "#6890F0",
-    Grass: "#1e7a14",
-    Lightning: "#F8D030",
-    Psychic: "#916eb4",
-    Fighting: "#C03028",
-    Colorless: "#b9b9b9",
+    Fire: "#D32F2F",
+    Water: "#1976D2",
+    Grass: "#388E3C",
+    Lightning: "#FBC02D",
+    Psychic: "#7B1FA2",
+    Fighting: "#8D6E63",
+    Colorless: "#B0BEC5",
   };
 
   const typeCounts = topFavorites.reduce(
@@ -58,6 +69,19 @@ export const TopFavorites = () => {
         borderWidth: 1,
       },
     ],
+  };
+
+  const pieOptions: ChartOptions<"pie"> = {
+    plugins: {
+      legend: {
+        labels: {
+          color: "#eee",
+          font: {
+            size: 14,
+          },
+        },
+      },
+    },
   };
 
   useEffect(() => {
@@ -91,8 +115,8 @@ export const TopFavorites = () => {
         data: topFavorites.map((p) => parseInt(p.favorite_count)),
         backgroundColor: topFavorites.map((p) => typeColors[p.type] || "#888"),
         borderRadius: 1,
-        barThickness: 21, // <-- makes bars thicker
-        maxBarThickness: 30,
+        barThickness: 30,
+        maxBarThickness: 40,
       },
     ],
   };
@@ -111,8 +135,8 @@ export const TopFavorites = () => {
             return `${context.raw} favorites (${type})`;
           },
         },
-        titleFont: { size: 16 }, // Tooltip title
-        bodyFont: { size: 14 }, // Tooltip body
+        titleFont: { size: 16 },
+        bodyFont: { size: 14 },
       },
     },
     scales: {
@@ -120,15 +144,17 @@ export const TopFavorites = () => {
         beginAtZero: true,
         ticks: {
           stepSize: 1,
+          color: "#eee",
           font: {
-            size: 16, // Y-axis numbers
+            size: 16,
           },
         },
       },
       y: {
         ticks: {
+          color: "#eee",
           font: {
-            size: 15, // Pokémon names
+            size: 18, // Pokémon names
           },
         },
       },
@@ -138,12 +164,17 @@ export const TopFavorites = () => {
   return (
     <div className="top-favorites">
       <section className="card-grid">
-        {topFavorites.map((p) => (
-          <div key={p.card_id} className="card-summary">
-            <img src={p.image} alt={p.name} />
-            <div className="card-label">
-              <strong>{p.name}</strong>
-              <span>{p.favorite_count} favorites</span>
+        {topFavorites.map((p, i) => (
+          <div className="top-favorite-card" onClick={() => openFullScreen(p)}>
+            <div key={p.card_id} className="card-summary">
+              <img src={p.image} alt={p.name} />
+              <div className="card-label">
+                <strong>{p.name}</strong>
+                <span>{p.favorite_count} favorites</span>
+              </div>
+            </div>
+            <div className="card-rank">
+              <span className="card-rank-text">#{i + 1}</span>
             </div>
           </div>
         ))}
@@ -156,9 +187,23 @@ export const TopFavorites = () => {
 
         <div className="chart">
           <h3>Top Energy Types Pokémon</h3>
-          <Pie data={pieChartData} />
+          <Pie data={pieChartData} options={pieOptions} />
         </div>
       </section>
+
+      {fullscreenCard && (
+        <div className="fullscreen-overlay" onClick={closeFullScreen}>
+          <div
+            className="fullscreen-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img src={fullscreenCard.image} alt={fullscreenCard.name} />
+            <h2>{fullscreenCard.name}</h2>
+            <p>{fullscreenCard.favorite_count} favorites</p>
+            <button onClick={closeFullScreen}>Close ❌</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
