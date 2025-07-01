@@ -114,8 +114,8 @@ export const TopFavorites = () => {
         data: topFavorites.map((p) => parseInt(p.favorite_count)),
         backgroundColor: topFavorites.map((p) => typeColors[p.type] || "#888"),
         borderRadius: 1,
-        barThickness: 30,
-        maxBarThickness: 40,
+        barThickness: 16,
+        maxBarThickness: 20,
       },
     ],
   };
