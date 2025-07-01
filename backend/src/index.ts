@@ -24,6 +24,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.set("trust proxy", 1);
 
 app.use("/api", authRoutes);
 app.use("/api/pokemon", pokemonRoute);
