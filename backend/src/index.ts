@@ -18,6 +18,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://gglist-frontend-177352903615.us-central1.run.app",
+      "https://gglist.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "DELETE", "OPTIONS"],

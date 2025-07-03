@@ -1,5 +1,6 @@
 # GGList – Developer Overview
 
+https://gglist.app/
 GGList is a full-stack app for tracking and ranking user favorites. This version uses Pokémon cards, but it’s built to work with anything — games, movies, books, whatever. Users log in with Google, favorite up to 10 items, and see a leaderboard of top picks across all users.
 
 ---
