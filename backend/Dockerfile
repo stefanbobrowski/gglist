@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install dependencies only if package files change
 COPY package*.json ./
-RUN npm install
+RUN npm install --omit=dev
 
 # Copy the rest of the code
 COPY . .
