@@ -1,4 +1,4 @@
-# --- Stage 1: Build app with devDependencies ---
+# --- Stage 1: Build with devDependencies ---
 FROM node:18-slim AS builder
 
 WORKDIR /app
@@ -8,17 +8,15 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# --- Stage 2: Serve built files with Vite Preview ---
+# --- Stage 2: Final runtime image ---
 FROM node:18-slim
 
 WORKDIR /app
 
-# Install Vite (needed to serve)
+# Copy built code and install runtime dependencies
+COPY --from=builder /app/dist ./dist
 COPY package*.json ./
 RUN npm install --omit=dev
 
-# Copy only the built output
-COPY --from=builder /app/dist ./dist
-
 EXPOSE 8080
-CMD ["npx", "vite", "preview", "--port", "8080", "--host", "0.0.0.0"]
+CMD ["node", "dist/index.js"]
