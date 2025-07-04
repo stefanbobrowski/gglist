@@ -1,28 +1,20 @@
-# --- Stage 1: Build with devDependencies ---
-FROM node:18-slim AS builder
+# Use base image
+FROM node:18-slim
 
+# Set working directory
 WORKDIR /app
 
-# Install full deps for build
-COPY package*.json tsconfig.json ./
+# Install dependencies
+COPY package*.json ./
 RUN npm install
+
+# Copy the rest of the app and build
 COPY . .
 RUN npm run build
 
-# --- Stage 2: Serve with Vite preview ---
-FROM node:18-slim
+# Install a simple static file server for Node
+RUN npm install -g serve
 
-WORKDIR /app
-
-# Install only prod dependencies (needed for `vite preview`)
-COPY package*.json ./
-RUN npm install --omit=dev
-
-# Copy built app only
-COPY --from=builder /app/dist ./dist
-
-# Set environment variables (optional)
-ENV NODE_ENV=production
-
+# Expose port 8080 and serve the build folder
 EXPOSE 8080
-CMD ["npx", "vite", "preview", "--port", "8080", "--host", "0.0.0.0"]
+CMD ["serve", "-s", "dist", "-l", "8080"]
