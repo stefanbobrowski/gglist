@@ -8,7 +8,7 @@ export function Header() {
 
   return (
     <header>
-      <h1>ggList</h1>
+      <h1>ggList - Pokemon</h1>
       {user ? (
         <div className="user-info-container">
           <div className="user-info">
