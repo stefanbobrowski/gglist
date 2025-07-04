@@ -3,22 +3,27 @@ FROM node:18-slim AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copy just enough to install deps and build
+COPY package*.json tsconfig.json ./
 RUN npm install
-COPY . .
+
+# Copy the source code
+COPY src ./src
+
+# Build the TypeScript project
 RUN npm run build
 
-# --- Stage 2: Final runtime image ---
+# --- Stage 2: Runtime image with only what's needed to run ---
 FROM node:18-slim
 
 WORKDIR /app
 
-# Copy built app and package.json for runtime deps
-COPY --from=builder /app/dist ./dist
+# Copy only production dependencies
 COPY package*.json ./
-
-# Install only production dependencies
 RUN npm install --omit=dev
+
+# Copy the built output from Stage 1
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 8080
 CMD ["node", "dist/index.js"]
