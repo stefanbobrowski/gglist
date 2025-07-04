@@ -14,7 +14,6 @@ export default defineConfig({
     port: 8080,
     allowedHosts: [
       "gglist.app",
-      // "www.gglist.app",
       "gglist-frontend-177352903615.us-central1.run.app",
     ],
   },
