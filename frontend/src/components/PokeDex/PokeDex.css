@@ -169,8 +169,6 @@
 
 .empty-card-slots > div {
   display: block;
-  height: 200px;
   aspect-ratio: 1 / 1.5;
-
   background-color: #222;
 }
