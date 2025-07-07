@@ -5,7 +5,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173, // Optional: explicitly define Vite dev port
+    port: 5173,
     proxy: {
       "/api": "http://localhost:8080",
     },
@@ -19,4 +19,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: "/", // <-- THIS fixes broken asset URLs in production
 });
