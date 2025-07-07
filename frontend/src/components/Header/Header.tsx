@@ -2,13 +2,16 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../context/AuthContext";
 import "./Header.css";
 import { API_BASE } from "../../constants";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const { user, setUser, logout } = useAuth();
 
   return (
     <header>
-      <h1>ggList - Pokemon</h1>
+      <h1>
+        <Link to="/">ggList - Pokemon</Link>
+      </h1>
       {user ? (
         <div className="user-info-container">
           <div className="user-info">

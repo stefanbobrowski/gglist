@@ -8,6 +8,8 @@ import authRoutes from "./routes/auth";
 import favoriteRoutes from "./routes/favorites";
 import top from "./routes/top";
 import { errorHandler } from "./middleware/errorHandler";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 app.use(express.json());
@@ -47,6 +49,20 @@ const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`GGList Server running on port ${PORT}`);
+});
+
+const __dirname = path.resolve();
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Serve React app for all non-API routes
+app.get("*", (req, res) => {
+  if (!req.path.startsWith("/api")) {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+  } else {
+    res.status(404).json({ error: "Not found" });
+  }
 });
 
 app.use((_req, res) => {

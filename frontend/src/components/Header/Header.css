@@ -1,3 +1,11 @@
 header {
   padding: 0.5rem;
 }
+
+header a {
+  color: #fff;
+}
+
+header a:hover {
+  color: #ddd;
+}
