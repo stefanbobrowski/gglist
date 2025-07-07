@@ -53,14 +53,13 @@ app.get("/api/hello", (_req: Request, res: Response) => {
 const distPath = path.join(__dirname, "dist");
 app.use(express.static(distPath));
 
-// React Router fallback (serve index.html)
-app.get("*", ((req, res) => {
-  if (!req.path.startsWith("/api")) {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
-  } else {
-    res.status(404).json({ error: "Not found" });
+// Handle React Router fallback using middleware-style function
+app.use((req, res, next) => {
+  if (req.method === "GET" && !req.path.startsWith("/api")) {
+    return res.sendFile(path.join(__dirname, "dist", "index.html"));
   }
-}) as express.RequestHandler);
+  next();
+});
 
 // Error/404 handling
 app.use((_req, res) => {
