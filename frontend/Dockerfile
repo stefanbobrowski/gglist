@@ -8,13 +8,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app and build
+# Copy the rest and build
 COPY . .
 RUN npm run build
 
-# Install a simple static file server for Node
+# Install serve to host the static files
 RUN npm install -g serve
 
-# Expose port 8080 and serve the build folder
 EXPOSE 8080
 CMD ["serve", "-s", "dist", "-l", "8080"]
