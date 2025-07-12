@@ -44,7 +44,7 @@ export function Header() {
               })
               .then(({ token, user }) => {
                 localStorage.setItem("token", token);
-                setUser(user);
+                setUser({ ...user, token });
               })
               .catch((err) => {
                 console.error("❌ Login error:", err);

@@ -12,9 +12,8 @@ type Pokemon = {
 
 const PokeDex: React.FC = () => {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, favorites, setFavorites } = useAuth();
 
   const [fullscreenCard, setFullscreenCard] = useState<Pokemon | null>(null);
 
@@ -54,26 +53,6 @@ const PokeDex: React.FC = () => {
 
     fetchPokemon();
   }, []);
-
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      if (!user) return;
-      try {
-        const res = await fetch(`${API_BASE}/api/favorites`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
-        if (!res.ok) throw new Error(`Failed to fetch favorites`);
-        const data = await res.json();
-        setFavorites(data.favorites || []);
-      } catch (err) {
-        console.error("Error loading favorites:", err);
-      }
-    };
-
-    fetchFavorites();
-  }, [user]);
 
   const toggleFavorite = async (id: string) => {
     const isFavorited = favorites.includes(id);

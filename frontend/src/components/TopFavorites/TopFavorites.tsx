@@ -164,7 +164,11 @@ export const TopFavorites = () => {
     <div className="top-favorites">
       <section className="card-grid">
         {topFavorites.map((p, i) => (
-          <div className="top-favorite-card" onClick={() => openFullScreen(p)}>
+          <div
+            className="top-favorite-card"
+            onClick={() => openFullScreen(p)}
+            key={p.card_id}
+          >
             <div key={p.card_id} className="card-summary">
               <img src={p.image} alt={p.name} />
               <div className="card-label">

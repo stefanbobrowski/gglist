@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { ensureUserExists } from "../utils/ensureUserExists";
 
 interface AuthPayload {
@@ -12,7 +12,14 @@ export const authenticate = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const token = req.headers.authorization?.split(" ")[1];
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    res.status(401).json({ error: "Invalid or missing Authorization header" });
+    return;
+  }
+
+  const token = authHeader.split(" ")[1];
   if (!token) {
     res.status(401).json({ error: "No token" });
     return;
@@ -23,8 +30,13 @@ export const authenticate = async (
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET!) as AuthPayload;
   } catch (err) {
-    console.error("❌ JWT verify error:", err);
-    res.status(401).json({ error: "Invalid token" });
+    if (err instanceof TokenExpiredError) {
+      console.warn("⚠️ JWT expired:", err.message);
+      res.status(401).json({ error: "Token expired" });
+    } else {
+      console.error("❌ JWT verification error:", err);
+      res.status(401).json({ error: "Invalid token" });
+    }
     return;
   }
 
@@ -35,7 +47,7 @@ export const authenticate = async (
 
   try {
     const userId = await ensureUserExists(decoded.email);
-    (req as any).user = { id: userId, email: decoded.email };
+    req.user = { id: userId, email: decoded.email };
     next();
   } catch (err) {
     console.error("❌ ensureUserExists error:", err);
