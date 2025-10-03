@@ -1,11 +1,42 @@
 header {
-  padding: 0.5rem;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #2a2d3e;
+  /* border-bottom: 2px solid #ffcb05; */
+  padding: 1rem;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #3b4cca, #ffcb05, #cc0000);
+    box-shadow: 0 0 6px rgba(255, 203, 5, 0.7);
+  }
+}
+
+header h1 {
+  font-size: 2.5rem;
+  letter-spacing: 0.25rem;
 }
 
 header a {
+  margin: 0 1rem;
+  font-family: "Press Start 2P", cursive;
   color: #fff;
 }
 
 header a:hover {
-  color: #ddd;
+  color: #ffcb05;
+}
+
+.header-title {
+  margin: 2rem auto 1rem auto;
+  padding: 0 1rem;
+  font-size: clamp(1rem, 1.75vw, 2.25rem);
 }

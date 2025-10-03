@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <h1 className="header-title">
-        Your Top 10 Favorite Pokemon Cards? (Original 150)
-      </h1>
+      <h2 className="header-title">
+        Global Leaderboard: Top 10 Favorite Pokemon Cards (Original 150)
+      </h2>
       <TopFavorites />
       <hr />
       <PokeDex />

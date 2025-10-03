@@ -1,8 +1,8 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../context/AuthContext";
-import "./Header.css";
 import { API_BASE } from "../../constants";
 import { Link } from "react-router-dom";
+import "./Header.css";
 
 export function Header() {
   const { user, setUser, logout } = useAuth();
@@ -10,8 +10,11 @@ export function Header() {
   return (
     <header>
       <h1>
-        <Link to="/">ggList - Pokemon</Link>
+        <Link to="/">ggList Pokemon</Link>
       </h1>
+      <Link to="/about" className="nav-link">
+        About
+      </Link>
       {user ? (
         <div className="user-info-container">
           <div className="user-info">

@@ -22,24 +22,12 @@
   }
 }
 
-header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #777;
-}
-
-header h1 {
-}
-
-.header-title {
-  margin: 2rem auto 1rem auto;
-  font-size: clamp(1.5rem, 2vw, 2.5rem);
-}
-
-h1,
-h2 {
+h1 {
   text-shadow: 7px 7px 7px black;
+}
+
+h2 {
+  text-shadow: -2px 2px 1px black;
 }
 
 .user-info {

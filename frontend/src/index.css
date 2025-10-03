@@ -1,10 +1,12 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto Flex", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #333;
+  /* color: rgba(255, 255, 255, 0.87); */
+  color: #f5f5f5;
+  /* background-color: #333; */
+  background: linear-gradient(180deg, #1c1f2b 0%, #0d0f14 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -28,12 +30,22 @@ body {
   min-height: 100vh;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Press Start 2P", system-ui;
+  letter-spacing: 1px;
+}
+
 h1 {
-  font-size: 3.2em;
+  font-size: 2rem;
 }
 
 h2 {
-  font-size: 2.4em;
+  font-size: 2rem;
 }
 
 button {
@@ -66,4 +78,27 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #3b4cca, #ffcb05, #cc0000);
+  box-shadow: 0 0 6px rgba(255, 203, 5, 0.7);
+}
+
+.page {
+  max-width: 900px;
+  margin: 2rem auto;
+  text-align: left;
+}
+
+.page h1,
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.page ul {
+  margin: 1rem auto;
 }
