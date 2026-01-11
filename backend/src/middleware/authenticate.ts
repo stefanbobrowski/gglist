@@ -5,6 +5,21 @@ import { ensureUserExists } from "../utils/ensureUserExists";
 interface AuthPayload {
   id: string;
   email: string;
+  name?: string;
+  picture?: string;
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+        email: string;
+        name?: string;
+        picture?: string;
+      };
+    }
+  }
 }
 
 export const authenticate = async (
@@ -47,7 +62,12 @@ export const authenticate = async (
 
   try {
     const userId = await ensureUserExists(decoded.email);
-    req.user = { id: userId, email: decoded.email };
+    req.user = {
+      id: userId,
+      email: decoded.email,
+      name: decoded.name,
+      picture: decoded.picture,
+    };
     next();
   } catch (err) {
     console.error("❌ ensureUserExists error:", err);

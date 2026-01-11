@@ -13,14 +13,7 @@ import {
 import type { ChartOptions } from "chart.js";
 import { API_BASE } from "../../constants";
 
-ChartJS.register(
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement);
 
 export const TopFavorites = () => {
   const [topFavorites, setTopFavorites] = useState<any[]>([]);
@@ -164,11 +157,7 @@ export const TopFavorites = () => {
     <div className="top-favorites">
       <section className="card-grid">
         {topFavorites.map((p, i) => (
-          <div
-            className="top-favorite-card"
-            onClick={() => openFullScreen(p)}
-            key={p.card_id}
-          >
+          <div className="top-favorite-card" onClick={() => openFullScreen(p)} key={p.card_id}>
             <div key={p.card_id} className="card-summary">
               <img src={p.image} alt={p.name} />
               <div className="card-label">
@@ -189,17 +178,14 @@ export const TopFavorites = () => {
         </div>
 
         <div className="chart">
-          <h3>Top Energy Types Pokémon</h3>
+          <h3>Top Energy Types</h3>
           <Pie data={pieChartData} options={pieOptions} />
         </div>
       </section>
 
       {fullscreenCard && (
         <div className="fullscreen-overlay" onClick={closeFullScreen}>
-          <div
-            className="fullscreen-content"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="fullscreen-content" onClick={(e) => e.stopPropagation()}>
             <img src={fullscreenCard.image} alt={fullscreenCard.name} />
             <h2>{fullscreenCard.name}</h2>
             <p>{fullscreenCard.favorite_count} favorites</p>

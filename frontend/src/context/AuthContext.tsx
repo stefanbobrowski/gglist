@@ -32,55 +32,56 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const decoded: User = jwtDecode(token);
-      setUser({ ...decoded, token });
-    } catch (err) {
-      console.warn("❌ Invalid token:", err);
-      localStorage.removeItem("token");
-    }
-  }, []);
-
-  // Now fetch favorites only *after* user is set
-  useEffect(() => {
-    if (!user?.token) return;
-
-    console.log("📦 Fetching favorites for user:", user.email);
-
-    fetch(`${API_BASE}/api/favorites`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    })
-      .then(async (res) => {
-        const contentType = res.headers.get("content-type") || "";
-        if (!res.ok || !contentType.includes("application/json")) {
-          const text = await res.text();
-          console.warn("⚠️ Invalid favorites response:", text.slice(0, 100));
-          throw new Error("Invalid favorites response");
-        }
-        return res.json();
-      })
-      .then((data) => setFavorites(data.favorites || []))
-      .catch((err) => {
-        console.error("❌ Failed to fetch favorites:", err);
-      });
-  }, [user?.token]);
-
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
     setFavorites([]);
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    fetch(`${API_BASE}/api/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Invalid token");
+        return res.json();
+      })
+      .then(({ user }) => {
+        setUser({ ...user, token });
+      })
+      .catch((err) => {
+        console.warn("⚠️ Session invalid:", err);
+        logout();
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!user?.token) return;
+
+    console.log("📦 Fetching favorites for user:", user.email);
+
+    fetch(`${API_BASE}/api/favorites`, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    })
+      .then(async (res) => {
+        if (res.status === 401) {
+          console.warn("⚠️ Unauthorized — token likely expired");
+          logout();
+          throw new Error("Unauthorized");
+        }
+        const data = await res.json();
+        setFavorites(data.favorites || []);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch favorites:", err);
+      });
+  }, [user?.token]);
+
   return (
-    <AuthContext.Provider
-      value={{ user, setUser, favorites, setFavorites, logout }}
-    >
+    <AuthContext.Provider value={{ user, setUser, favorites, setFavorites, logout }}>
       {children}
     </AuthContext.Provider>
   );

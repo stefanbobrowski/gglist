@@ -28,7 +28,7 @@
 }
 
 .card-summary {
-  background-color: #222;
+  background-color: #111;
   border-radius: 5px;
   padding: 0.4rem;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
@@ -65,10 +65,8 @@
   display: flex;
   justify-content: center;
   width: 100%;
-}
-
-.chart-section {
   margin-top: 1rem;
+  gap: 3rem;
 }
 
 .chart-section .chart {
@@ -80,6 +78,7 @@
   height: 300px;
   /* margin-inline: 3rem; */
   margin-block-end: 2rem;
+  background-color: #111111;
 }
 
 /* Fullscreen */

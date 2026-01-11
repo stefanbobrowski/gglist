@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
 import { loginRateLimiter } from "../middleware/rateLimit";
+import { authenticate } from "../middleware/authenticate";
 
 const router = express.Router();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -15,6 +16,10 @@ interface GoogleUser {
 
 router.get("/debug", (_req, res) => {
   res.send("Auth route working!");
+});
+
+router.get("/me", authenticate, async (req, res) => {
+  res.json({ user: req.user });
 });
 
 // POST /api/google-login

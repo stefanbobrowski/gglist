@@ -16,7 +16,21 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
+// Configure helmet with a relaxed Cross-Origin-Opener-Policy so
+// Google Sign-In's postMessage (and similar popup flows) are allowed.
+// We also disable the embedder policy here to avoid strict COEP requirements.
+app.use(
+  helmet({
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+// Ensure the header is present for clients that check it directly.
+app.use((req: Request, res: Response, next: () => void) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  next();
+});
 
 app.use(
   cors({

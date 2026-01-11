@@ -139,12 +139,12 @@
   grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
   justify-items: center;
   margin: 1rem auto;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: #111;
   border-radius: 10px;
 }
 
 .pokedex-card {
-  border: 2px solid transparent;
+  border: 2px solid blue;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -170,5 +170,5 @@
   margin-top: 0.3rem;
   border-radius: 4px;
   padding: 0.1rem;
-  background-color: #555;
+  background-color: #444;
 }
