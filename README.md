@@ -41,33 +41,27 @@ GGList is a full-stack app for tracking and ranking user favorites. This version
 
 - **React + Vite + TypeScript**
 - Auth via **Google Sign-In**
-- Uses **React Context** for auth state
-- REST API calls with `fetch`
+- **React Context** for auth state
 - Pure CSS
-- Deployed on **GCP Cloud Run**
 
 ### Backend
 
 - **Node + Express + TypeScript**
 - Auth with **JWT** (signed server-side)
-- Routes for `/auth`, `/favorites`, `/top`, `/pokemon`
 - Local cache layer for Pokémon dataset (cache/pokemon.json) avoids API/database calls
-- Protected routes using middleware
 - Rate limiting with `express-rate-limit`
 
 ### Database
 
 - **PostgreSQL** via Google **Cloud SQL**
-- Table: `favorites (user_id, card_id)`
 - Seeded with a JSON list of Pokémon cards
 
 ### Google Cloud Platform
 
 - **Cloud Run** (frontend and backend separately containerized)
 - **Cloud SQL** for PostgreSQL
-- **GitHub Actions** for CI/CD with **Workload Identity Federation**
 - **Artifact Registry** for Docker images
-- All environment secrets stored securely (nothing committed)
+- **GitHub Actions** for CI/CD with **Workload Identity Federation**
 
 ---
 
