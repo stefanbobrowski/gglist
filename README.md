@@ -35,7 +35,7 @@ GGList is a full-stack app for tracking and ranking user favorites. This version
 
 ---
 
-## 🔧 Stack Overview
+## Stack Overview
 
 ### Frontend
 
