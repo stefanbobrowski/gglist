@@ -61,7 +61,7 @@ GGList is a full-stack app for tracking and ranking user favorites. This version
 - Table: `favorites (user_id, card_id)`
 - Seeded with a JSON list of Pokémon cards
 
-### ☁️ Google Cloud Platform
+### Google Cloud Platform
 
 - **Cloud Run** (frontend and backend separately containerized)
 - **Cloud SQL** for PostgreSQL
@@ -96,9 +96,9 @@ cd backend && npm install && npm run dev
 
 ## Repo
 
-🔗 github.com/stefanbobrowski/gglist
+[github.com/stefanbobrowski/gglist](github.com/stefanbobrowski/gglist)
 
-## 📄 License
+## License
 
 © 2026 GGList. Built by Stefan Bobrowski. All rights reserved.
 
