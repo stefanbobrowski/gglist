@@ -1,7 +1,49 @@
-# GGList – Developer Overview
+# GGList
+
+```
+                 ."-,.__
+                 `.     `.  ,
+              .--'  .._,'"-' `.
+             .    .'         `'
+             `.   /          ,'
+               `  '--.   ,-"'
+                `"`   |  \
+                   -. \, |
+                    `--Y.'      ___.
+                         \     L._, \
+               _.,        `.   <  <\                _
+             ,' '           `, `.   | \            ( `
+          ../, `.            `  |    .\`.           \ \_
+         ,' ,..  .           _.,'    ||\l            )  '".
+        , ,'   \           ,'.-.`-._,'  |           .  _._`.
+      ,' /      \ \        `' ' `--/   | \          / /   ..\
+    .'  /        \ .         |\__ - _ ,'` `        / /     `.`.
+    |  '          ..         `-...-"  |  `-'      / /        . `.
+    | /           |L__           |    |          / /          `. `.
+   , /            .   .          |    |         / /             ` `
+  / /          ,. ,`._ `-_       |    |  _   ,-' /               ` \
+ / .           \"`_/. `-_ \_,.  ,'    +-' `-'  _,        ..,-.    \`.
+.  '         .-f    ,'   `    '.       \__.---'     _   .'   '     \ \
+' /          `.'    l     .' /          \..      ,_|/   `.  ,'`     L`
+|'      _.-""` `.    \ _,'  `            \ `.___`.'"`-.  , |   |    | \
+||    ,'      `. `.   '       _,...._        `  |    `/ '  |   '     .|
+||  ,'          `. ;.,.---' ,'       `.   `.. `-'  .-' /_ .'    ;_   ||
+|| '              V      / /           `   | `   ,'   ,' '.    !  `. ||
+||/            _,-------7 '              . |  `-'    l         /    `||
+. |          ,' .-   ,' ||               | .-.        `.      .'     ||
+ `'        ,'    `".'    |               |    `.        '. -.'       `'
+          /      ,'      |               |,'    \-.._,.'/'
+          .     /        .               .       \    .''
+        .`.    |         `.             /         :_,'.'
+          \ `...\   _     ,'-.        .'         /_.-'
+           `-.__ `,  `'   .  _.>----''.  _  __  /
+                .'        /"'          |  "'   '_
+               /_|.-'\ ,".             '.'`__'-( \
+                 / ,"'"\,'               `/  `-.|" mh
+```
 
 https://gglist.app/
-GGList is a full-stack app for tracking and ranking user favorites. This version uses Pokémon cards, but it’s built to work with anything — games, movies, books, whatever. Users log in with Google, favorite up to 10 items, and see a leaderboard of top picks across all users.
+GGList is a full-stack app for tracking and ranking user favorites. This version uses Pokémon cards, but it’s built to work with anything: games, movies, books, whatever. Users log in with Google, favorite up to 10 items, and see a leaderboard of top picks across all users.
 
 ---
 
@@ -13,7 +55,7 @@ GGList is a full-stack app for tracking and ranking user favorites. This version
 - Auth via **Google Sign-In**
 - Uses **React Context** for auth state
 - REST API calls with `fetch`
-- No CSS frameworks — all custom styles
+- Pure CSS
 - Deployed on **GCP Cloud Run**
 
 ### Backend
@@ -45,7 +87,7 @@ GGList is a full-stack app for tracking and ranking user favorites. This version
 
 ## What Makes GGList Reusable
 
-This isn’t just a Pokémon demo — the whole setup is meant to be repurposed:
+This isn’t just a Pokémon demo, the whole setup is meant to be repurposed:
 
 - Swap in any dataset (games, movies, etc.)
 - Favorites system stays the same
